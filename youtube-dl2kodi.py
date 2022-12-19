@@ -27,9 +27,9 @@ def main(json_file: str):
     premiered = SubElement(root, "premiered")
     plot = SubElement(root, "plot")
 
-    title.text = f"{data['fulltitle']}"
-    episode.text = f"{data['playlist_index']}"
-    premiered.text = f"{premiered_date}"
+    title.text = data['fulltitle']
+    episode.text = data['playlist_index']
+    premiered.text = premiered_date
     plot.text = data['description']
 
     with codecs.open(filename=f"{base_file}.nfo", mode="w", encoding=ENC) as file:

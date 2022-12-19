@@ -47,7 +47,7 @@ def get_xml_data(json_dict: Dict[str, Any]) -> Element:
     season.text = dseason.text = "1"
     episode.text = depisode.text = f"{json_dict['n_entries'] - json_dict['playlist_index'] + 1}"
     plot.text = json_dict["description"]
-    runtime.text = get_minutes_from_sec(json_dict["duration"])
+    runtime.text = f"{get_minutes_from_sec(json_dict['duration'])}"
     uuid.text = json_dict["id"]
     uuid.set("type", json_dict["extractor"])
     uuid.set("default", "true")

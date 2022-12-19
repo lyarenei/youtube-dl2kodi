@@ -27,19 +27,39 @@ def main(json_file: str):
 
 
 def get_xml_data(json_dict: Dict[str, Any]) -> Element:
-    premiered_date = get_datetime_str(json_dict['upload_date'])
     root = Element("episodedetails")
     title = SubElement(root, "title")
+    show = SubElement(root, "showtitle")
+    season = SubElement(root, "season")
     episode = SubElement(root, "episode")
-    premiered = SubElement(root, "premiered")
+    dseason = SubElement(root, "displayseason")
+    depisode = SubElement(root, "displayepisode")
     plot = SubElement(root, "plot")
+    runtime = SubElement(root, "runtime")
+    uuid = SubElement(root, "uniqueid")
+    premiered = SubElement(root, "premiered")
+    year = SubElement(root, "year")
+    aired = SubElement(root, "aired")
 
     title.text = json_dict['fulltitle']
-    episode.text = json_dict['playlist_index']
-    premiered.text = premiered_date
+    show.text = json_dict['channel']
+    season.text = dseason.text = "1"
+    episode.text = depisode.text = f"{json_dict['n_entries'] - json_dict['playlist_index'] + 1}"
     plot.text = json_dict['description']
+    runtime.text = get_minutes_from_sec(json_dict['duration'])
+    uuid.text = json_dict['id']
+    uuid.set("type", json_dict['extractor'])
+    uuid.set("default", "true")
+    premiered.text = aired.text = get_datetime_str(json_dict['upload_date'])
+    year.text = get_datetime_str(json_dict['upload_date'], '%Y')
 
     return root
+
+
+def get_minutes_from_sec(secs) -> int:
+    minutes = secs // 60
+    remainder = secs % 60
+    return minutes if remainder == 0 else minutes + 1
 
 
 def prettify(elem: Element) -> str:

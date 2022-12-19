@@ -8,6 +8,11 @@ from datetime import datetime
 from xml.dom import minidom
 from xml.etree.ElementTree import Element, SubElement, tostring
 
+INDENT = '  '
+ENC = 'utf-8'
+KODI_DATE = '%Y-%m-%d'
+YTD_DATE = '%Y%m%d'
+
 
 def main(json_file: str):
     base_file = os.path.splitext(json_file)[0]
@@ -27,18 +32,18 @@ def main(json_file: str):
     premiered.text = f"{premiered_date}"
     plot.text = f"{data['uploader_url']}\n{data['description']}\n{data['playlist_title']}"
 
-    with codecs.open(filename=f"{base_file}.nfo", mode="w", encoding="utf-8") as file:
+    with codecs.open(filename=f"{base_file}.nfo", mode="w", encoding=ENC) as file:
         file.write(prettify(root))
 
 
 def prettify(elem: Element) -> str:
-    xml_string = tostring(elem, "utf-8")
+    xml_string = tostring(elem, ENC)
     minidom_parsed = minidom.parseString(xml_string)
-    return minidom_parsed.toprettyxml(indent="  ")
+    return minidom_parsed.toprettyxml(indent=INDENT)
 
 
-def get_datetime_str(date: str, out_fmt='%Y-%m-%d') -> str:
-    return datetime.strptime(date, '%Y%m%d').strftime(out_fmt)
+def get_datetime_str(date: str, out_fmt=KODI_DATE) -> str:
+    return datetime.strptime(date, YTD_DATE).strftime(out_fmt)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,4 @@
 import codecs
-import getopt
 import json
 import os
 import sys
@@ -8,21 +7,7 @@ from xml.dom import minidom
 from xml.etree.ElementTree import Element, SubElement, tostring
 
 
-def main(argv):
-    filename = ""
-
-    try:
-        opts, args = getopt.getopt(argv, "h:f:", ["file="])
-    except getopt.GetoptError:
-        print('youtube-dl2kodi.py -f <inputfile>')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print('youtube-dl2kodi.py -f <inputfile>')
-            sys.exit()
-        elif opt in ("-f", "--file"):
-            filename = arg
-
+def main(filename):
     base_file = os.path.splitext(filename)[0]
     filejson = f"{base_file}.info.json"
     with open(filejson) as data_file:
@@ -51,4 +36,5 @@ def prettify(elem):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    filename = sys.argv[1:][0]
+    main(filename)

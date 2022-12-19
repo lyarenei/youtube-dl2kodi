@@ -40,6 +40,7 @@ def get_xml_data(json_dict: Dict[str, Any]) -> Element:
     premiered = SubElement(root, "premiered")
     year = SubElement(root, "year")
     aired = SubElement(root, "aired")
+    lock = SubElement(root, "lockdata")
 
     title.text = json_dict['fulltitle']
     show.text = json_dict['channel']
@@ -52,6 +53,7 @@ def get_xml_data(json_dict: Dict[str, Any]) -> Element:
     uuid.set("default", "true")
     premiered.text = aired.text = get_datetime_str(json_dict['upload_date'])
     year.text = get_datetime_str(json_dict['upload_date'], '%Y')
+    lock.text = 'true'
 
     return root
 

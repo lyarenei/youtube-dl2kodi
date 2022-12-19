@@ -9,10 +9,10 @@ from typing import Dict, Any
 from xml.dom import minidom
 from xml.etree.ElementTree import Element, SubElement, tostring
 
-INDENT = '  '
-ENC = 'utf-8'
-KODI_DATE = '%Y-%m-%d'
-YTD_DATE = '%Y%m%d'
+INDENT = "  "
+ENC = "utf-8"
+KODI_DATE = "%Y-%m-%d"
+YTD_DATE = "%Y%m%d"
 
 
 def main(json_file: str):
@@ -42,18 +42,18 @@ def get_xml_data(json_dict: Dict[str, Any]) -> Element:
     aired = SubElement(root, "aired")
     lock = SubElement(root, "lockdata")
 
-    title.text = json_dict['fulltitle']
-    show.text = json_dict['channel']
+    title.text = json_dict["fulltitle"]
+    show.text = json_dict["channel"]
     season.text = dseason.text = "1"
     episode.text = depisode.text = f"{json_dict['n_entries'] - json_dict['playlist_index'] + 1}"
-    plot.text = json_dict['description']
-    runtime.text = get_minutes_from_sec(json_dict['duration'])
-    uuid.text = json_dict['id']
-    uuid.set("type", json_dict['extractor'])
+    plot.text = json_dict["description"]
+    runtime.text = get_minutes_from_sec(json_dict["duration"])
+    uuid.text = json_dict["id"]
+    uuid.set("type", json_dict["extractor"])
     uuid.set("default", "true")
-    premiered.text = aired.text = get_datetime_str(json_dict['upload_date'])
-    year.text = get_datetime_str(json_dict['upload_date'], '%Y')
-    lock.text = 'true'
+    premiered.text = aired.text = get_datetime_str(json_dict["upload_date"])
+    year.text = get_datetime_str(json_dict["upload_date"], "%Y")
+    lock.text = "true"
 
     return root
 

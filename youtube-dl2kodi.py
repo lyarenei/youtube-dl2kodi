@@ -15,7 +15,7 @@ def main(json_file: str):
     with open(filejson) as data_file:
         data = json.load(data_file)
 
-    premiered_date = datetime.strptime(data['upload_date'], '%Y%m%d').strftime('%Y-%m-%d')
+    premiered_date = get_datetime_str(data['upload_date'])
     root = Element("episodedetails")
     title = SubElement(root, "title")
     episode = SubElement(root, "episode")
@@ -35,6 +35,10 @@ def prettify(elem: Element) -> str:
     xml_string = tostring(elem, "utf-8")
     minidom_parsed = minidom.parseString(xml_string)
     return minidom_parsed.toprettyxml(indent="  ")
+
+
+def get_datetime_str(date: str, out_fmt='%Y-%m-%d') -> str:
+    return datetime.strptime(date, '%Y%m%d').strftime(out_fmt)
 
 
 if __name__ == "__main__":

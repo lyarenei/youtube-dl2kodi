@@ -5,6 +5,7 @@ import json
 import os
 import sys
 from datetime import datetime
+from typing import Dict, Any
 from xml.dom import minidom
 from xml.etree.ElementTree import Element, SubElement, tostring
 
@@ -19,20 +20,26 @@ def main(json_file: str):
     with open(f"{base_file}.info.json") as data_file:
         data = json.load(data_file)
 
-    premiered_date = get_datetime_str(data['upload_date'])
+    xml_data = get_xml_data(data)
+
+    with codecs.open(filename=f"{base_file}.nfo", mode="w", encoding=ENC) as file:
+        file.write(prettify(xml_data))
+
+
+def get_xml_data(json_dict: Dict[str, Any]) -> Element:
+    premiered_date = get_datetime_str(json_dict['upload_date'])
     root = Element("episodedetails")
     title = SubElement(root, "title")
     episode = SubElement(root, "episode")
     premiered = SubElement(root, "premiered")
     plot = SubElement(root, "plot")
 
-    title.text = data['fulltitle']
-    episode.text = data['playlist_index']
+    title.text = json_dict['fulltitle']
+    episode.text = json_dict['playlist_index']
     premiered.text = premiered_date
-    plot.text = data['description']
+    plot.text = json_dict['description']
 
-    with codecs.open(filename=f"{base_file}.nfo", mode="w", encoding=ENC) as file:
-        file.write(prettify(root))
+    return root
 
 
 def prettify(elem: Element) -> str:

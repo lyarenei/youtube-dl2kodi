@@ -6,6 +6,6 @@ For the episode number to work correctly, you need to use `--playlist-reverse` o
 
 For example:
 ```shell
-yt-dlp --write-info-json --playlist-reverse --exec before_dl:'youtube-dl2kodi.py -f {}' <playlist_url>
+yt-dlp --write-info-json --playlist-reverse --exec before_dl:'youtube-dl2kodi.py {}' <playlist_url>
 ```
 Note: exec `before_dl` is not necessary, but it is useful if you want to skip downloading and only generate metadata.

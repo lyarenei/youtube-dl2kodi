@@ -16,8 +16,7 @@ YTD_DATE = '%Y%m%d'
 
 def main(json_file: str):
     base_file = os.path.splitext(json_file)[0]
-    filejson = f"{base_file}.info.json"
-    with open(filejson) as data_file:
+    with open(f"{base_file}.info.json") as data_file:
         data = json.load(data_file)
 
     premiered_date = get_datetime_str(data['upload_date'])

@@ -30,7 +30,7 @@ def main(json_file: str):
     title.text = f"{data['fulltitle']}"
     episode.text = f"{data['playlist_index']}"
     premiered.text = f"{premiered_date}"
-    plot.text = f"{data['uploader_url']}\n{data['description']}\n{data['playlist_title']}"
+    plot.text = data['description']
 
     with codecs.open(filename=f"{base_file}.nfo", mode="w", encoding=ENC) as file:
         file.write(prettify(root))

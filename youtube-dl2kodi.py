@@ -9,7 +9,7 @@ from xml.dom import minidom
 from xml.etree.ElementTree import Element, SubElement, tostring
 
 
-def main(json_file):
+def main(json_file: str):
     base_file = os.path.splitext(json_file)[0]
     filejson = f"{base_file}.info.json"
     with open(filejson) as data_file:
@@ -31,7 +31,7 @@ def main(json_file):
         file.write(prettify(root))
 
 
-def prettify(elem):
+def prettify(elem: Element) -> str:
     xml_string = tostring(elem, "utf-8")
     minidom_parsed = minidom.parseString(xml_string)
     return minidom_parsed.toprettyxml(indent="  ")

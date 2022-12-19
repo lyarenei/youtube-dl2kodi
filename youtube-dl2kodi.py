@@ -9,8 +9,8 @@ from xml.dom import minidom
 from xml.etree.ElementTree import Element, SubElement, tostring
 
 
-def main(filename):
-    base_file = os.path.splitext(filename)[0]
+def main(json_file):
+    base_file = os.path.splitext(json_file)[0]
     filejson = f"{base_file}.info.json"
     with open(filejson) as data_file:
         data = json.load(data_file)

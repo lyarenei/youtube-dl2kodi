@@ -1,14 +1,11 @@
 # youtube-dl2kodi
 
-# options
-youtube-dl2 -f <video.info.json>
- -f file path of the youtube-dl video.info.json file
+A simple script to parse JSON produced by `--write-info-json` option in youtube-dl/yt-dlp.
 
-# example
-~~~~
-youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' \
---continue --ignore-errors --write-info-json --write-thumbnail --write-sub \ 
---output './Season 1/%(title)s-e%(playlist_index)s.%(ext)s' \ 
---exec 'youtube-dl2kodi.py -f {}' \
-https://www.youtube.com/playlist?list=PLKocZwBnFDxNAoxyxZ0w7mum35YY4v0nb 
-~~~~
+For the episode number to work correctly, you need to use `--playlist-reverse` option.
+
+For example:
+```shell
+yt-dlp --write-info-json --playlist-reverse --exec before_dl:'youtube-dl2kodi.py -f {}' <playlist_url>
+```
+Note: exec `before_dl` is not necessary, but it is useful if you want to skip downloading and only generate metadata.
